@@ -368,6 +368,25 @@
             outline: none;
         }
         
+        .tag-select, .priority-select {
+            padding: 2px 6px;
+            border: none;
+            border-radius: 4px;
+            background: var(--bg);
+            color: var(--text);
+            font-size: 0.7rem;
+            cursor: pointer;
+            outline: none;
+        }
+        
+        .tag-select.life { background: rgba(236, 72, 153, 0.2); color: var(--life); }
+        .tag-select.work { background: rgba(59, 130, 246, 0.2); color: var(--work); }
+        .tag-select.study { background: rgba(139, 92, 246, 0.2); color: var(--study); }
+        
+        .priority-select.high { background: rgba(244, 63, 94, 0.2); color: var(--danger); }
+        .priority-select.medium { background: rgba(245, 158, 11, 0.2); color: var(--warning); }
+        .priority-select.low { background: rgba(16, 185, 129, 0.2); color: var(--success); }
+        
         /* 导出按钮 */
         .actions {
             display: flex;
@@ -606,6 +625,16 @@
             render();
         }
         
+        function updateMeta(timeType, id, field, value) {
+            const todos = getTodos();
+            const todo = todos[timeType].find(t => t.id === id);
+            if (todo) {
+                todo[field] = value;
+                saveTodos(todos);
+                render();
+            }
+        }
+        
         function toggleTodo(timeType, id) {
             const todos = getTodos();
             const todo = todos[timeType].find(t => t.id === id);
@@ -664,9 +693,17 @@
                                 <input type="checkbox" class="todo-checkbox" ${todo.completed ? 'checked' : ''} onchange="toggleTodo('${group.key}', ${todo.id})">
                                 <div class="todo-content">
                                     <div class="todo-text" id="text-${todo.id}">${escapeHtml(todo.text)}</div>
-                                    <div class="todo-meta">
-                                        <span class="tag ${todo.category}">${todo.category === 'life' ? '生活' : todo.category === 'work' ? '工作' : '学习'}</span>
-                                        <span class="priority-badge ${todo.priority}">${todo.priority === 'high' ? '高' : todo.priority === 'medium' ? '中' : '低'}</span>
+                                    <div class="todo-meta" id="meta-${todo.id}">
+                                        <select class="tag-select ${todo.category}" onchange="updateMeta('${group.key}', ${todo.id}, 'category', this.value)">
+                                            <option value="life" ${todo.category === 'life' ? 'selected' : ''}>生活</option>
+                                            <option value="work" ${todo.category === 'work' ? 'selected' : ''}>工作</option>
+                                            <option value="study" ${todo.category === 'study' ? 'selected' : ''}>学习</option>
+                                        </select>
+                                        <select class="priority-select ${todo.priority}" onchange="updateMeta('${group.key}', ${todo.id}, 'priority', this.value)">
+                                            <option value="high" ${todo.priority === 'high' ? 'selected' : ''}>高</option>
+                                            <option value="medium" ${todo.priority === 'medium' ? 'selected' : ''}>中</option>
+                                            <option value="low" ${todo.priority === 'low' ? 'selected' : ''}>低</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <button class="edit-btn" onclick="editTodo('${group.key}', ${todo.id})">编辑</button>
