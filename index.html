@@ -404,25 +404,6 @@
         }
         
         /* 快捷键提示 */
-        .shortcuts {
-            text-align: center;
-            margin-top: 24px;
-            color: var(--text-dim);
-            font-size: 0.75rem;
-        }
-        
-        .kbd {
-            background: var(--card);
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-family: monospace;
-            border: 1px solid var(--border);
-        }
-        
-        @media (max-width: 540px) {
-            .stats-panel {
-                grid-template-columns: repeat(2, 1fr);
-            }
             .input-row {
                 flex-direction: column;
             }
@@ -513,10 +494,6 @@
             <button class="btn btn-secondary" onclick="exportData()">导出</button>
             <button class="btn btn-secondary" onclick="document.getElementById('importFile').click()">导入</button>
             <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
-        </div>
-        
-        <div class="shortcuts">
-            <kbd class="kbd">Enter</kbd> 添加 &nbsp; <kbd class="kbd">Esc</kbd> 清空
         </div>
     </div>
 
