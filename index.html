@@ -336,6 +336,38 @@
             color: var(--danger);
         }
         
+        .edit-btn {
+            padding: 6px 10px;
+            border: none;
+            border-radius: 6px;
+            background: transparent;
+            color: var(--text-dim);
+            cursor: pointer;
+            font-size: 0.75rem;
+            opacity: 0;
+            transition: all 0.2s;
+        }
+        
+        .todo-item:hover .edit-btn {
+            opacity: 1;
+        }
+        
+        .edit-btn:hover {
+            background: rgba(139, 92, 246, 0.15);
+            color: var(--accent);
+        }
+        
+        .edit-input {
+            flex: 1;
+            padding: 6px 10px;
+            border: 1px solid var(--accent);
+            border-radius: 6px;
+            background: var(--bg);
+            color: var(--text);
+            font-size: 0.9rem;
+            outline: none;
+        }
+        
         /* 导出按钮 */
         .actions {
             display: flex;
@@ -535,6 +567,45 @@
             }
         }
         
+        function editTodo(timeType, id) {
+            const todos = getTodos();
+            const todo = todos[timeType].find(t => t.id === id);
+            if (!todo) return;
+            
+            const textDiv = document.getElementById(`text-${id}`);
+            const currentText = todo.text;
+            
+            textDiv.innerHTML = `<input type="text" class="edit-input" value="${escapeHtml(currentText)}" id="input-${id}" onkeypress="handleEditKey(event, '${timeType}', ${id})" onblur="saveEdit('${timeType}', ${id})">`;
+            
+            const input = document.getElementById(`input-${id}`);
+            input.focus();
+            input.setSelectionRange(input.value.length, input.value.length);
+        }
+        
+        function handleEditKey(event, timeType, id) {
+            if (event.key === 'Enter') {
+                saveEdit(timeType, id);
+            } else if (event.key === 'Escape') {
+                render();
+            }
+        }
+        
+        function saveEdit(timeType, id) {
+            const input = document.getElementById(`input-${id}`);
+            if (!input) return;
+            
+            const newText = input.value.trim();
+            if (newText) {
+                const todos = getTodos();
+                const todo = todos[timeType].find(t => t.id === id);
+                if (todo) {
+                    todo.text = newText;
+                    saveTodos(todos);
+                }
+            }
+            render();
+        }
+        
         function toggleTodo(timeType, id) {
             const todos = getTodos();
             const todo = todos[timeType].find(t => t.id === id);
@@ -592,12 +663,13 @@
                             <li class="todo-item ${todo.completed ? 'completed' : ''}">
                                 <input type="checkbox" class="todo-checkbox" ${todo.completed ? 'checked' : ''} onchange="toggleTodo('${group.key}', ${todo.id})">
                                 <div class="todo-content">
-                                    <div class="todo-text">${escapeHtml(todo.text)}</div>
+                                    <div class="todo-text" id="text-${todo.id}">${escapeHtml(todo.text)}</div>
                                     <div class="todo-meta">
                                         <span class="tag ${todo.category}">${todo.category === 'life' ? '生活' : todo.category === 'work' ? '工作' : '学习'}</span>
                                         <span class="priority-badge ${todo.priority}">${todo.priority === 'high' ? '高' : todo.priority === 'medium' ? '中' : '低'}</span>
                                     </div>
                                 </div>
+                                <button class="edit-btn" onclick="editTodo('${group.key}', ${todo.id})">编辑</button>
                                 <button class="delete-btn" onclick="deleteTodo('${group.key}', ${todo.id})">删除</button>
                             </li>
                         `;
