@@ -11,16 +11,33 @@
             box-sizing: border-box;
         }
         
+        :root {
+            --bg: #0f0f1a;
+            --card: #1a1a2e;
+            --card-hover: #252542;
+            --text: #e0e0e0;
+            --text-dim: #888;
+            --accent: #6366f1;
+            --accent-hover: #818cf8;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --success: #10b981;
+            --life: #ec4899;
+            --work: #3b82f6;
+            --study: #8b5cf6;
+        }
+        
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #1a1a2e;
-            color: #eee;
+            background: var(--bg);
+            color: var(--text);
             min-height: 100vh;
             padding: 20px;
+            line-height: 1.6;
         }
         
         .container {
-            max-width: 600px;
+            max-width: 800px;
             margin: 0 auto;
         }
         
@@ -32,65 +49,207 @@
         h1 {
             font-size: 2rem;
             margin-bottom: 5px;
+            background: linear-gradient(135deg, var(--accent), var(--life));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         .date {
-            color: #888;
+            color: var(--text-dim);
             font-size: 0.9rem;
         }
         
-        .input-group {
+        /* 统计面板 */
+        .stats-panel {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        
+        .stat-card {
+            background: var(--card);
+            padding: 16px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+        
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+        }
+        
+        /* 输入区域 */
+        .input-section {
+            background: var(--card);
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .input-row {
             display: flex;
             gap: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 12px;
         }
         
         input[type="text"] {
             flex: 1;
-            padding: 12px 16px;
-            border: none;
-            border-radius: 8px;
-            background: #16213e;
-            color: #eee;
+            padding: 14px 18px;
+            border: 2px solid transparent;
+            border-radius: 10px;
+            background: var(--bg);
+            color: var(--text);
             font-size: 1rem;
             outline: none;
+            transition: border-color 0.2s;
         }
         
         input[type="text"]:focus {
-            box-shadow: 0 0 0 2px #4a69bd;
+            border-color: var(--accent);
         }
         
-        button.add-btn {
+        .options-row {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .option-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .option-label {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+        
+        select {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            background: var(--bg);
+            color: var(--text);
+            font-size: 0.9rem;
+            cursor: pointer;
+            outline: none;
+        }
+        
+        select.priority-high { border-left: 3px solid var(--danger); }
+        select.priority-medium { border-left: 3px solid var(--warning); }
+        select.priority-low { border-left: 3px solid var(--success); }
+        
+        .btn {
             padding: 12px 24px;
             border: none;
-            border-radius: 8px;
-            background: #4a69bd;
+            border-radius: 10px;
+            background: var(--accent);
             color: #fff;
             font-size: 1rem;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
         
-        button.add-btn:hover {
-            background: #6a89dd;
+        .btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
         }
         
+        .btn-secondary {
+            background: var(--card);
+            font-size: 0.85rem;
+            padding: 10px 16px;
+        }
+        
+        .btn-secondary:hover {
+            background: var(--card-hover);
+        }
+        
+        /* 标签筛选 */
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+        
+        .tab {
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: var(--card);
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+        
+        .tab:hover, .tab.active {
+            background: var(--accent);
+            color: #fff;
+        }
+        
+        .tab.life { --tab-color: var(--life); }
+        .tab.work { --tab-color: var(--work); }
+        .tab.study { --tab-color: var(--study); }
+        
+        .tab.active.life, .tab:hover.life { background: var(--life); }
+        .tab.active.work, .tab:hover.work { background: var(--work); }
+        .tab.active.study, .tab:hover.study { background: var(--study); }
+        
+        /* TODO列表 */
         .todo-list {
             list-style: none;
+        }
+        
+        .todo-group {
+            margin-bottom: 24px;
+        }
+        
+        .group-title {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            margin-bottom: 12px;
+            padding-left: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .group-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--card);
         }
         
         .todo-item {
             display: flex;
             align-items: center;
-            padding: 12px 16px;
-            background: #16213e;
-            border-radius: 8px;
+            padding: 14px 18px;
+            background: var(--card);
+            border-radius: 12px;
             margin-bottom: 10px;
             transition: all 0.2s;
+            border-left: 3px solid transparent;
         }
         
         .todo-item:hover {
-            background: #1f2b4d;
+            background: var(--card-hover);
+            transform: translateX(4px);
         }
         
         .todo-item.completed {
@@ -101,19 +260,33 @@
             text-decoration: line-through;
         }
         
+        .todo-item.priority-high { border-left-color: var(--danger); }
+        .todo-item.priority-medium { border-left-color: var(--warning); }
+        .todo-item.priority-low { border-left-color: var(--success); }
+        
+        .todo-item.category-life { border-left-color: var(--life); }
+        .todo-item.category-work { border-left-color: var(--work); }
+        .todo-item.category-study { border-left-color: var(--study); }
+        
         .todo-checkbox {
-            width: 20px;
-            height: 20px;
-            margin-right: 12px;
+            width: 22px;
+            height: 22px;
+            margin-right: 14px;
             cursor: pointer;
             appearance: none;
-            border: 2px solid #4a69bd;
-            border-radius: 4px;
+            border: 2px solid var(--accent);
+            border-radius: 6px;
             position: relative;
+            flex-shrink: 0;
+            transition: all 0.2s;
+        }
+        
+        .todo-checkbox:hover {
+            background: rgba(99, 102, 241, 0.3);
         }
         
         .todo-checkbox:checked {
-            background: #4a69bd;
+            background: var(--accent);
         }
         
         .todo-checkbox:checked::after {
@@ -124,23 +297,56 @@
             transform: translate(-50%, -50%);
             color: #fff;
             font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .todo-content {
+            flex: 1;
+            min-width: 0;
         }
         
         .todo-text {
-            flex: 1;
             word-break: break-all;
+            margin-bottom: 4px;
         }
         
-        .delete-btn {
-            padding: 6px 12px;
-            border: none;
+        .todo-meta {
+            display: flex;
+            gap: 10px;
+            font-size: 0.75rem;
+        }
+        
+        .tag {
+            padding: 2px 8px;
             border-radius: 4px;
-            background: #e74c3c;
-            color: #fff;
+            font-size: 0.7rem;
+        }
+        
+        .tag.life { background: rgba(236, 72, 153, 0.2); color: var(--life); }
+        .tag.work { background: rgba(59, 130, 246, 0.2); color: var(--work); }
+        .tag.study { background: rgba(139, 92, 246, 0.2); color: var(--study); }
+        
+        .priority-badge {
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+        }
+        
+        .priority-badge.high { background: rgba(239, 68, 68, 0.2); color: var(--danger); }
+        .priority-badge.medium { background: rgba(245, 158, 11, 0.2); color: var(--warning); }
+        .priority-badge.low { background: rgba(16, 185, 129, 0.2); color: var(--success); }
+        
+        .delete-btn {
+            padding: 8px 14px;
+            border: none;
+            border-radius: 6px;
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger);
             cursor: pointer;
             font-size: 0.8rem;
             opacity: 0;
-            transition: opacity 0.2s;
+            transition: all 0.2s;
+            margin-left: 10px;
         }
         
         .todo-item:hover .delete-btn {
@@ -148,20 +354,50 @@
         }
         
         .delete-btn:hover {
-            background: #c0392b;
+            background: var(--danger);
+            color: #fff;
         }
         
-        .stats {
-            text-align: center;
+        /* 导出按钮 */
+        .actions {
+            display: flex;
+            gap: 10px;
             margin-top: 20px;
-            color: #888;
-            font-size: 0.9rem;
+            padding-top: 20px;
+            border-top: 1px solid var(--card);
         }
         
         .empty-state {
             text-align: center;
-            color: #555;
+            color: var(--text-dim);
             padding: 40px;
+        }
+        
+        /* 快捷键提示 */
+        .shortcuts {
+            text-align: center;
+            margin-top: 30px;
+            color: var(--text-dim);
+            font-size: 0.8rem;
+        }
+        
+        .kbd {
+            background: var(--card);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        
+        @media (max-width: 600px) {
+            .stats-panel {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .input-row {
+                flex-direction: column;
+            }
+            .options-row {
+                justify-content: space-between;
+            }
         }
     </style>
 </head>
@@ -172,18 +408,87 @@
             <div class="date" id="currentDate"></div>
         </header>
         
-        <div class="input-group">
-            <input type="text" id="todoInput" placeholder="添加新任务..." onkeypress="handleKeyPress(event)">
-            <button class="add-btn" onclick="addTodo()">添加</button>
+        <!-- 统计面板 -->
+        <div class="stats-panel">
+            <div class="stat-card">
+                <div class="stat-value" id="totalCount">0</div>
+                <div class="stat-label">总任务</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="completedCount">0</div>
+                <div class="stat-label">已完成</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="completionRate">0%</div>
+                <div class="率</div>
+stat-label">完成            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="streakDays">0</div>
+                <div class="stat-label">连续天数</div>
+            </div>
         </div>
         
+        <!-- 输入区域 -->
+        <div class="input-section">
+            <div class="input-row">
+                <input type="text" id="todoInput" placeholder="添加新任务..." onkeypress="handleKeyPress(event)">
+                <button class="btn" onclick="addTodo()">➕ 添加</button>
+            </div>
+            <div class="options-row">
+                <div class="option-group">
+                    <span class="option-label">分类：</span>
+                    <select id="categorySelect">
+                        <option value="life">🌸 生活</option>
+                        <option value="work">💼 工作</option>
+                        <option value="study">📚 学习</option>
+                    </select>
+                </div>
+                <div class="option-group">
+                    <span class="option-label">优先级：</span>
+                    <select id="prioritySelect" class="priority-high">
+                        <option value="high">🔴 高</option>
+                        <option value="medium" selected>🟡 中</option>
+                        <option value="low">🟢 低</option>
+                    </select>
+                </div>
+                <div class="option-group">
+                    <span class="option-label">时间：</span>
+                    <select id="timeSelect">
+                        <option value="today">今日</option>
+                        <option value="week">本周</option>
+                        <option value="long">长期</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 标签筛选 -->
+        <div class="tabs">
+            <button class="tab active" data-filter="all">全部</button>
+            <button class="tab life" data-filter="life">🌸 生活</button>
+            <button class="tab work" data-filter="work">💼 工作</button>
+            <button class="tab study" data-filter="study">📚 学习</button>
+        </div>
+        
+        <!-- TODO列表 -->
         <ul class="todo-list" id="todoList"></ul>
         
-        <div class="stats" id="stats"></div>
+        <!-- 导出操作 -->
+        <div class="actions">
+            <button class="btn btn-secondary" onclick="exportData()">📤 导出数据</button>
+            <button class="btn btn-secondary" onclick="document.getElementById('importFile').click()">📥 导入数据</button>
+            <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
+        </div>
+        
+        <div class="shortcuts">
+            快捷键：<kbd class="kbd">Enter</kbd> 添加 &nbsp; <kbd class="kbd">Esc</kbd> 清空
+        </div>
     </div>
 
     <script>
-        const STORAGE_KEY = 'daily-todos';
+        const STORAGE_KEY = 'daily-todos-v2';
+        const STREAK_KEY = 'todo-streak';
+        let currentFilter = 'all';
         
         // 显示日期
         document.getElementById('currentDate').textContent = new Date().toLocaleDateString('zh-CN', {
@@ -198,105 +503,169 @@
             return new Date().toISOString().split('T')[0];
         }
         
+        function getWeekKey() {
+            const now = new Date();
+            const monday = new Date(now);
+            monday.setDate(now.getDate() - now.getDay() + 1);
+            return monday.toISOString().split('T')[0];
+        }
+        
         // 获取所有todos
         function getTodos() {
             const data = localStorage.getItem(STORAGE_KEY);
-            return data ? JSON.parse(data) : {};
+            return data ? JSON.parse(data) : { today: [], week: [], long: [] };
         }
         
         // 保存todos
         function saveTodos(todos) {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
-        }
-        
-        // 获取今天的todos
-        function getTodayTodos() {
-            const todos = getTodos();
-            return todos[getTodayKey()] || [];
-        }
-        
-        // 保存今天的todos
-        function saveTodayTodos(todayTodos) {
-            const todos = getTodos();
-            todos[getTodayKey()] = todayTodos;
-            saveTodos(todos);
+            updateStreak();
         }
         
         // 添加todo
         function addTodo() {
             const input = document.getElementById('todoInput');
             const text = input.value.trim();
-            
             if (!text) return;
             
-            const todayTodos = getTodayTodos();
-            todayTodos.push({
+            const category = document.getElementById('categorySelect').value;
+            const priority = document.getElementById('prioritySelect').value;
+            const timeType = document.getElementById('timeSelect').value;
+            
+            const todos = getTodos();
+            const newTodo = {
                 id: Date.now(),
                 text: text,
-                completed: false
-            });
+                completed: false,
+                category: category,
+                priority: priority,
+                createdAt: new Date().toISOString()
+            };
             
-            saveTodayTodos(todayTodos);
+            if (timeType === 'today') {
+                todos.today.push(newTodo);
+            } else if (timeType === 'week') {
+                todos.week.push(newTodo);
+            } else {
+                todos.long.push(newTodo);
+            }
+            
+            saveTodos(todos);
             input.value = '';
             render();
         }
         
         // 删除todo
-        function deleteTodo(id) {
-            const todayTodos = getTodayTodos();
-            const index = todayTodos.findIndex(t => t.id === id);
+        function deleteTodo(timeType, id) {
+            const todos = getTodos();
+            const list = todos[timeType];
+            const index = list.findIndex(t => t.id === id);
             if (index > -1) {
-                todayTodos.splice(index, 1);
-                saveTodayTodos(todayTodos);
+                list.splice(index, 1);
+                saveTodos(todos);
                 render();
             }
         }
         
         // 切换完成状态
-        function toggleTodo(id) {
-            const todayTodos = getTodayTodos();
-            const todo = todayTodos.find(t => t.id === id);
+        function toggleTodo(timeType, id) {
+            const todos = getTodos();
+            const todo = todos[timeType].find(t => t.id === id);
             if (todo) {
                 todo.completed = !todo.completed;
-                saveTodayTodos(todayTodos);
+                saveTodos(todos);
                 render();
             }
         }
         
-        // 回车添加
+        // 回车添加, ESC清空
         function handleKeyPress(event) {
             if (event.key === 'Enter') {
                 addTodo();
+            } else if (event.key === 'Escape') {
+                document.getElementById('todoInput').value = '';
             }
         }
+        
+        // 筛选
+        function setFilter(filter) {
+            currentFilter = filter;
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.filter === filter);
+            });
+            render();
+        }
+        
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => setFilter(tab.dataset.filter));
+        });
+        
+        // 优先级颜色变化
+        document.getElementById('prioritySelect').addEventListener('change', function() {
+            this.className = 'priority-' + this.value;
+        });
         
         // 渲染列表
         function render() {
             const todoList = document.getElementById('todoList');
-            const todayTodos = getTodayTodos();
+            const todos = getTodos();
             
-            if (todayTodos.length === 0) {
-                todoList.innerHTML = '<div class="empty-state">今天没有任务，放松一下吧~ 🎉</div>';
-                document.getElementById('stats').textContent = '';
-                return;
+            let allTodos = [];
+            const timeGroups = [
+                { key: 'today', name: '📅 今日任务' },
+                { key: 'week', name: '📆 本周任务' },
+                { key: 'long', name: '⭐ 长期目标' }
+            ];
+            
+            let html = '';
+            let total = 0, completed = 0;
+            
+            timeGroups.forEach(group => {
+                let filtered = todos[group.key];
+                if (currentFilter !== 'all') {
+                    filtered = filtered.filter(t => t.category === currentFilter);
+                }
+                
+                if (filtered.length > 0) {
+                    html += `<div class="todo-group"><div class="group-title">${group.name}</div>`;
+                    
+                    filtered.forEach(todo => {
+                        total++;
+                        if (todo.completed) completed++;
+                        
+                        const priorityLabel = { high: '高', medium: '中', low: '低' };
+                        const categoryLabel = { life: '生活', work: '工作', study: '学习' };
+                        
+                        html += `
+                            <li class="todo-item priority-${todo.priority} category-${todo.category} ${todo.completed ? 'completed' : ''}">
+                                <input type="checkbox" class="todo-checkbox" ${todo.completed ? 'checked' : ''} onchange="toggleTodo('${group.key}', ${todo.id})">
+                                <div class="todo-content">
+                                    <div class="todo-text">${escapeHtml(todo.text)}</div>
+                                    <div class="todo-meta">
+                                        <span class="tag ${todo.category}">${categoryLabel[todo.category]}</span>
+                                        <span class="priority-badge ${todo.priority}">${priorityLabel[todo.priority]}</span>
+                                    </div>
+                                </div>
+                                <button class="delete-btn" onclick="deleteTodo('${group.key}', ${todo.id})">删除</button>
+                            </li>
+                        `;
+                    });
+                    
+                    html += '</div>';
+                }
+            });
+            
+            if (!html) {
+                html = '<div class="empty-state">没有任务，放松一下吧~ 🎉</div>';
             }
             
-            todoList.innerHTML = todayTodos.map(todo => `
-                <li class="todo-item ${todo.completed ? 'completed' : ''}">
-                    <input 
-                        type="checkbox" 
-                        class="todo-checkbox" 
-                        ${todo.completed ? 'checked' : ''}
-                        onchange="toggleTodo(${todo.id})"
-                    >
-                    <span class="todo-text">${escapeHtml(todo.text)}</span>
-                    <button class="delete-btn" onclick="deleteTodo(${todo.id})">删除</button>
-                </li>
-            `).join('');
+            todoList.innerHTML = html;
             
-            // 统计
-            const completed = todayTodos.filter(t => t.completed).length;
-            document.getElementById('stats').textContent = `已完成 ${completed} / ${todayTodos.length}`;
+            // 更新统计
+            document.getElementById('totalCount').textContent = total;
+            document.getElementById('completedCount').textContent = completed;
+            document.getElementById('completionRate').textContent = total ? Math.round(completed / total * 100) + '%' : '0%';
+            document.getElementById('streakDays').textContent = getStreak();
         }
         
         // XSS防护
@@ -304,6 +673,86 @@
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
+        }
+        
+        // 连续打卡
+        function updateStreak() {
+            const today = getTodayKey();
+            const streakData = JSON.parse(localStorage.getItem(STREAK_KEY) || '[]');
+            const lastDate = streakData[streakData.length - 1];
+            
+            if (lastDate !== today) {
+                const yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                const yesterdayStr = yesterday.toISOString().split('T')[0];
+                
+                if (lastDate === yesterdayStr || !lastDate) {
+                    streakData.push(today);
+                } else if (lastDate !== today) {
+                    streakData.length = 0;
+                    streakData.push(today);
+                }
+            }
+            
+            localStorage.setItem(STREAK_KEY, JSON.stringify(streakData.slice(-30)));
+        }
+        
+        function getStreak() {
+            const streakData = JSON.parse(localStorage.getItem(STREAK_KEY) || '[]');
+            let streak = 0;
+            const today = new Date();
+            
+            for (let i = streakData.length - 1; i >= 0; i--) {
+                const checkDate = new Date(today);
+                checkDate.setDate(today.getDate() - (streakData.length - 1 - i));
+                if (checkDate.toISOString().split('T')[0] === streakData[i]) {
+                    streak++;
+                } else {
+                    break;
+                }
+            }
+            return streak;
+        }
+        
+        // 导出数据
+        function exportData() {
+            const data = {
+                todos: getTodos(),
+                streak: localStorage.getItem(STREAK_KEY),
+                exportTime: new Date().toISOString()
+            };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `todo-backup-${getTodayKey()}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+        
+        // 导入数据
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if (data.todos) {
+                        localStorage.setItem(STORAGE_KEY, JSON.stringify(data.todos));
+                    }
+                    if (data.streak) {
+                        localStorage.setItem(STREAK_KEY, data.streak);
+                    }
+                    render();
+                    alert('✅ 导入成功！');
+                } catch (err) {
+                    alert('❌ 导入失败：文件格式错误');
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = '';
         }
         
         // 初始化
