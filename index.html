@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>今日TODO</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1a1a2e;
+            color: #eee;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+        
+        .date {
+            color: #888;
+            font-size: 0.9rem;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        input[type="text"] {
+            flex: 1;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 8px;
+            background: #16213e;
+            color: #eee;
+            font-size: 1rem;
+            outline: none;
+        }
+        
+        input[type="text"]:focus {
+            box-shadow: 0 0 0 2px #4a69bd;
+        }
+        
+        button.add-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            background: #4a69bd;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        button.add-btn:hover {
+            background: #6a89dd;
+        }
+        
+        .todo-list {
+            list-style: none;
+        }
+        
+        .todo-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            background: #16213e;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            transition: all 0.2s;
+        }
+        
+        .todo-item:hover {
+            background: #1f2b4d;
+        }
+        
+        .todo-item.completed {
+            opacity: 0.5;
+        }
+        
+        .todo-item.completed .todo-text {
+            text-decoration: line-through;
+        }
+        
+        .todo-checkbox {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+            cursor: pointer;
+            appearance: none;
+            border: 2px solid #4a69bd;
+            border-radius: 4px;
+            position: relative;
+        }
+        
+        .todo-checkbox:checked {
+            background: #4a69bd;
+        }
+        
+        .todo-checkbox:checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            font-size: 14px;
+        }
+        
+        .todo-text {
+            flex: 1;
+            word-break: break-all;
+        }
+        
+        .delete-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            background: #e74c3c;
+            color: #fff;
+            cursor: pointer;
+            font-size: 0.8rem;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        
+        .todo-item:hover .delete-btn {
+            opacity: 1;
+        }
+        
+        .delete-btn:hover {
+            background: #c0392b;
+        }
+        
+        .stats {
+            text-align: center;
+            margin-top: 20px;
+            color: #888;
+            font-size: 0.9rem;
+        }
+        
+        .empty-state {
+            text-align: center;
+            color: #555;
+            padding: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🐕 今日TODO</h1>
+            <div class="date" id="currentDate"></div>
+        </header>
+        
+        <div class="input-group">
+            <input type="text" id="todoInput" placeholder="添加新任务..." onkeypress="handleKeyPress(event)">
+            <button class="add-btn" onclick="addTodo()">添加</button>
+        </div>
+        
+        <ul class="todo-list" id="todoList"></ul>
+        
+        <div class="stats" id="stats"></div>
+    </div>
+
+    <script>
+        const STORAGE_KEY = 'daily-todos';
+        
+        // 显示日期
+        document.getElementById('currentDate').textContent = new Date().toLocaleDateString('zh-CN', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            weekday: 'long'
+        });
+        
+        // 获取今天的日期key
+        function getTodayKey() {
+            return new Date().toISOString().split('T')[0];
+        }
+        
+        // 获取所有todos
+        function getTodos() {
+            const data = localStorage.getItem(STORAGE_KEY);
+            return data ? JSON.parse(data) : {};
+        }
+        
+        // 保存todos
+        function saveTodos(todos) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
+        }
+        
+        // 获取今天的todos
+        function getTodayTodos() {
+            const todos = getTodos();
+            return todos[getTodayKey()] || [];
+        }
+        
+        // 保存今天的todos
+        function saveTodayTodos(todayTodos) {
+            const todos = getTodos();
+            todos[getTodayKey()] = todayTodos;
+            saveTodos(todos);
+        }
+        
+        // 添加todo
+        function addTodo() {
+            const input = document.getElementById('todoInput');
+            const text = input.value.trim();
+            
+            if (!text) return;
+            
+            const todayTodos = getTodayTodos();
+            todayTodos.push({
+                id: Date.now(),
+                text: text,
+                completed: false
+            });
+            
+            saveTodayTodos(todayTodos);
+            input.value = '';
+            render();
+        }
+        
+        // 删除todo
+        function deleteTodo(id) {
+            const todayTodos = getTodayTodos();
+            const index = todayTodos.findIndex(t => t.id === id);
+            if (index > -1) {
+                todayTodos.splice(index, 1);
+                saveTodayTodos(todayTodos);
+                render();
+            }
+        }
+        
+        // 切换完成状态
+        function toggleTodo(id) {
+            const todayTodos = getTodayTodos();
+            const todo = todayTodos.find(t => t.id === id);
+            if (todo) {
+                todo.completed = !todo.completed;
+                saveTodayTodos(todayTodos);
+                render();
+            }
+        }
+        
+        // 回车添加
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                addTodo();
+            }
+        }
+        
+        // 渲染列表
+        function render() {
+            const todoList = document.getElementById('todoList');
+            const todayTodos = getTodayTodos();
+            
+            if (todayTodos.length === 0) {
+                todoList.innerHTML = '<div class="empty-state">今天没有任务，放松一下吧~ 🎉</div>';
+                document.getElementById('stats').textContent = '';
+                return;
+            }
+            
+            todoList.innerHTML = todayTodos.map(todo => `
+                <li class="todo-item ${todo.completed ? 'completed' : ''}">
+                    <input 
+                        type="checkbox" 
+                        class="todo-checkbox" 
+                        ${todo.completed ? 'checked' : ''}
+                        onchange="toggleTodo(${todo.id})"
+                    >
+                    <span class="todo-text">${escapeHtml(todo.text)}</span>
+                    <button class="delete-btn" onclick="deleteTodo(${todo.id})">删除</button>
+                </li>
+            `).join('');
+            
+            // 统计
+            const completed = todayTodos.filter(t => t.completed).length;
+            document.getElementById('stats').textContent = `已完成 ${completed} / ${todayTodos.length}`;
+        }
+        
+        // XSS防护
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // 初始化
+        render();
+    </script>
+</body>
+</html>
