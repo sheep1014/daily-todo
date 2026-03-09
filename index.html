@@ -12,14 +12,15 @@
         }
         
         :root {
-            --bg: #0f0f1a;
-            --card: #1a1a2e;
-            --card-hover: #252542;
-            --text: #e0e0e0;
-            --text-dim: #888;
-            --accent: #6366f1;
-            --accent-hover: #818cf8;
-            --danger: #ef4444;
+            --bg: #0d0d12;
+            --card: #16161e;
+            --card-hover: #1e1e28;
+            --border: #2a2a36;
+            --text: #e4e4e7;
+            --text-dim: #71717a;
+            --accent: #8b5cf6;
+            --accent-hover: #a78bfa;
+            --danger: #f43f5e;
             --warning: #f59e0b;
             --success: #10b981;
             --life: #ec4899;
@@ -32,32 +33,30 @@
             background: var(--bg);
             color: var(--text);
             min-height: 100vh;
-            padding: 20px;
-            line-height: 1.6;
+            padding: 24px;
+            line-height: 1.5;
         }
         
         .container {
-            max-width: 800px;
+            max-width: 640px;
             margin: 0 auto;
         }
         
         header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 32px;
         }
         
         h1 {
-            font-size: 2rem;
-            margin-bottom: 5px;
-            background: linear-gradient(135deg, var(--accent), var(--life));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--text);
         }
         
         .date {
             color: var(--text-dim);
-            font-size: 0.9rem;
+            font-size: 0.875rem;
         }
         
         /* 统计面板 */
@@ -70,21 +69,24 @@
         
         .stat-card {
             background: var(--card);
-            padding: 16px;
+            padding: 16px 12px;
             border-radius: 12px;
             text-align: center;
+            border: 1px solid var(--border);
         }
         
         .stat-value {
-            font-size: 1.8rem;
-            font-weight: bold;
+            font-size: 1.5rem;
+            font-weight: 600;
             color: var(--accent);
         }
         
         .stat-label {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: var(--text-dim);
             text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 2px;
         }
         
         /* 输入区域 */
@@ -92,23 +94,24 @@
             background: var(--card);
             padding: 20px;
             border-radius: 16px;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
         }
         
         .input-row {
             display: flex;
             gap: 10px;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
         
         input[type="text"] {
             flex: 1;
-            padding: 14px 18px;
-            border: 2px solid transparent;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
             border-radius: 10px;
             background: var(--bg);
             color: var(--text);
-            font-size: 1rem;
+            font-size: 0.95rem;
             outline: none;
             transition: border-color 0.2s;
         }
@@ -117,9 +120,43 @@
             border-color: var(--accent);
         }
         
+        input[type="text"]::placeholder {
+            color: var(--text-dim);
+        }
+        
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            background: var(--accent);
+            color: #fff;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        
+        .btn:hover {
+            background: var(--accent-hover);
+        }
+        
+        .btn-secondary {
+            background: var(--card);
+            color: var(--text-dim);
+            font-size: 0.8rem;
+            padding: 8px 14px;
+            border: 1px solid var(--border);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--card-hover);
+            color: var(--text);
+        }
+        
         .options-row {
             display: flex;
-            gap: 20px;
+            gap: 16px;
             flex-wrap: wrap;
         }
         
@@ -130,52 +167,19 @@
         }
         
         .option-label {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--text-dim);
         }
         
         select {
-            padding: 8px 12px;
-            border: none;
+            padding: 6px 10px;
+            border: 1px solid var(--border);
             border-radius: 6px;
             background: var(--bg);
             color: var(--text);
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             cursor: pointer;
             outline: none;
-        }
-        
-        select.priority-high { border-left: 3px solid var(--danger); }
-        select.priority-medium { border-left: 3px solid var(--warning); }
-        select.priority-low { border-left: 3px solid var(--success); }
-        
-        .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 10px;
-            background: var(--accent);
-            color: #fff;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        
-        .btn:hover {
-            background: var(--accent-hover);
-            transform: translateY(-1px);
-        }
-        
-        .btn-secondary {
-            background: var(--card);
-            font-size: 0.85rem;
-            padding: 10px 16px;
-        }
-        
-        .btn-secondary:hover {
-            background: var(--card-hover);
         }
         
         /* 标签筛选 */
@@ -187,28 +191,21 @@
         }
         
         .tab {
-            padding: 8px 16px;
+            padding: 6px 14px;
             border-radius: 20px;
             background: var(--card);
             color: var(--text-dim);
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             cursor: pointer;
             transition: all 0.2s;
-            border: none;
+            border: 1px solid var(--border);
         }
         
         .tab:hover, .tab.active {
             background: var(--accent);
             color: #fff;
+            border-color: var(--accent);
         }
-        
-        .tab.life { --tab-color: var(--life); }
-        .tab.work { --tab-color: var(--work); }
-        .tab.study { --tab-color: var(--study); }
-        
-        .tab.active.life, .tab:hover.life { background: var(--life); }
-        .tab.active.work, .tab:hover.work { background: var(--work); }
-        .tab.active.study, .tab:hover.study { background: var(--study); }
         
         /* TODO列表 */
         .todo-list {
@@ -216,77 +213,58 @@
         }
         
         .todo-group {
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
         
         .group-title {
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             color: var(--text-dim);
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             padding-left: 4px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .group-title::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--card);
+            font-weight: 500;
+            letter-spacing: 0.5px;
         }
         
         .todo-item {
             display: flex;
             align-items: center;
-            padding: 14px 18px;
+            padding: 12px 14px;
             background: var(--card);
-            border-radius: 12px;
-            margin-bottom: 10px;
-            transition: all 0.2s;
-            border-left: 3px solid transparent;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            transition: all 0.15s;
+            border: 1px solid var(--border);
         }
         
         .todo-item:hover {
             background: var(--card-hover);
-            transform: translateX(4px);
         }
         
         .todo-item.completed {
-            opacity: 0.5;
+            opacity: 0.4;
         }
         
         .todo-item.completed .todo-text {
             text-decoration: line-through;
+            color: var(--text-dim);
         }
         
-        .todo-item.priority-high { border-left-color: var(--danger); }
-        .todo-item.priority-medium { border-left-color: var(--warning); }
-        .todo-item.priority-low { border-left-color: var(--success); }
-        
-        .todo-item.category-life { border-left-color: var(--life); }
-        .todo-item.category-work { border-left-color: var(--work); }
-        .todo-item.category-study { border-left-color: var(--study); }
-        
         .todo-checkbox {
-            width: 22px;
-            height: 22px;
-            margin-right: 14px;
+            width: 18px;
+            height: 18px;
+            margin-right: 12px;
             cursor: pointer;
             appearance: none;
-            border: 2px solid var(--accent);
-            border-radius: 6px;
+            border: 2px solid var(--text-dim);
+            border-radius: 4px;
             position: relative;
             flex-shrink: 0;
             transition: all 0.2s;
         }
         
-        .todo-checkbox:hover {
-            background: rgba(99, 102, 241, 0.3);
-        }
-        
         .todo-checkbox:checked {
             background: var(--accent);
+            border-color: var(--accent);
         }
         
         .todo-checkbox:checked::after {
@@ -296,7 +274,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             color: #fff;
-            font-size: 14px;
+            font-size: 11px;
             font-weight: bold;
         }
         
@@ -306,47 +284,47 @@
         }
         
         .todo-text {
-            word-break: break-all;
-            margin-bottom: 4px;
+            font-size: 0.9rem;
+            word-break: break-word;
         }
         
         .todo-meta {
             display: flex;
-            gap: 10px;
-            font-size: 0.75rem;
+            gap: 6px;
+            margin-top: 4px;
         }
         
         .tag {
-            padding: 2px 8px;
+            font-size: 0.65rem;
+            padding: 2px 6px;
             border-radius: 4px;
-            font-size: 0.7rem;
         }
         
-        .tag.life { background: rgba(236, 72, 153, 0.2); color: var(--life); }
-        .tag.work { background: rgba(59, 130, 246, 0.2); color: var(--work); }
-        .tag.study { background: rgba(139, 92, 246, 0.2); color: var(--study); }
+        .tag.life { background: rgba(236, 72, 153, 0.15); color: var(--life); }
+        .tag.work { background: rgba(59, 130, 246, 0.15); color: var(--work); }
+        .tag.study { background: rgba(139, 92, 246, 0.15); color: var(--study); }
         
         .priority-badge {
-            padding: 2px 8px;
+            font-size: 0.65rem;
+            padding: 2px 6px;
             border-radius: 4px;
-            font-size: 0.7rem;
         }
         
-        .priority-badge.high { background: rgba(239, 68, 68, 0.2); color: var(--danger); }
-        .priority-badge.medium { background: rgba(245, 158, 11, 0.2); color: var(--warning); }
-        .priority-badge.low { background: rgba(16, 185, 129, 0.2); color: var(--success); }
+        .priority-badge.high { background: rgba(244, 63, 94, 0.15); color: var(--danger); }
+        .priority-badge.medium { background: rgba(245, 158, 11, 0.15); color: var(--warning); }
+        .priority-badge.low { background: rgba(16, 185, 129, 0.15); color: var(--success); }
         
         .delete-btn {
-            padding: 8px 14px;
+            padding: 6px 10px;
             border: none;
             border-radius: 6px;
-            background: rgba(239, 68, 68, 0.2);
-            color: var(--danger);
+            background: transparent;
+            color: var(--text-dim);
             cursor: pointer;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             opacity: 0;
             transition: all 0.2s;
-            margin-left: 10px;
+            margin-left: 8px;
         }
         
         .todo-item:hover .delete-btn {
@@ -354,46 +332,52 @@
         }
         
         .delete-btn:hover {
-            background: var(--danger);
-            color: #fff;
+            background: rgba(244, 63, 94, 0.15);
+            color: var(--danger);
         }
         
         /* 导出按钮 */
         .actions {
             display: flex;
             gap: 10px;
-            margin-top: 20px;
+            margin-top: 24px;
             padding-top: 20px;
-            border-top: 1px solid var(--card);
+            border-top: 1px solid var(--border);
         }
         
         .empty-state {
             text-align: center;
             color: var(--text-dim);
-            padding: 40px;
+            padding: 48px 20px;
+            font-size: 0.9rem;
         }
         
         /* 快捷键提示 */
         .shortcuts {
             text-align: center;
-            margin-top: 30px;
+            margin-top: 24px;
             color: var(--text-dim);
-            font-size: 0.8rem;
+            font-size: 0.75rem;
         }
         
         .kbd {
             background: var(--card);
-            padding: 2px 8px;
+            padding: 2px 6px;
             border-radius: 4px;
             font-family: monospace;
+            border: 1px solid var(--border);
         }
         
-        @media (max-width: 600px) {
+        @media (max-width: 540px) {
             .stats-panel {
                 grid-template-columns: repeat(2, 1fr);
             }
             .input-row {
                 flex-direction: column;
+            }
+            .btn {
+                width: 100%;
+                justify-content: center;
             }
             .options-row {
                 justify-content: space-between;
@@ -420,8 +404,8 @@
             </div>
             <div class="stat-card">
                 <div class="stat-value" id="completionRate">0%</div>
-                <div class="率</div>
-stat-label">完成            </div>
+                <div class="stat-label">完成率</div>
+            </div>
             <div class="stat-card">
                 <div class="stat-value" id="streakDays">0</div>
                 <div class="stat-label">连续天数</div>
@@ -432,27 +416,27 @@ stat-label">完成            </div>
         <div class="input-section">
             <div class="input-row">
                 <input type="text" id="todoInput" placeholder="添加新任务..." onkeypress="handleKeyPress(event)">
-                <button class="btn" onclick="addTodo()">➕ 添加</button>
+                <button class="btn" onclick="addTodo()">添加</button>
             </div>
             <div class="options-row">
                 <div class="option-group">
-                    <span class="option-label">分类：</span>
+                    <span class="option-label">分类</span>
                     <select id="categorySelect">
-                        <option value="life">🌸 生活</option>
-                        <option value="work">💼 工作</option>
-                        <option value="study">📚 学习</option>
+                        <option value="life">生活</option>
+                        <option value="work">工作</option>
+                        <option value="study">学习</option>
                     </select>
                 </div>
                 <div class="option-group">
-                    <span class="option-label">优先级：</span>
-                    <select id="prioritySelect" class="priority-high">
-                        <option value="high">🔴 高</option>
-                        <option value="medium" selected>🟡 中</option>
-                        <option value="low">🟢 低</option>
+                    <span class="option-label">优先级</span>
+                    <select id="prioritySelect">
+                        <option value="high">高</option>
+                        <option value="medium" selected>中</option>
+                        <option value="low">低</option>
                     </select>
                 </div>
                 <div class="option-group">
-                    <span class="option-label">时间：</span>
+                    <span class="option-label">时间</span>
                     <select id="timeSelect">
                         <option value="today">今日</option>
                         <option value="week">本周</option>
@@ -465,9 +449,9 @@ stat-label">完成            </div>
         <!-- 标签筛选 -->
         <div class="tabs">
             <button class="tab active" data-filter="all">全部</button>
-            <button class="tab life" data-filter="life">🌸 生活</button>
-            <button class="tab work" data-filter="work">💼 工作</button>
-            <button class="tab study" data-filter="study">📚 学习</button>
+            <button class="tab" data-filter="life">生活</button>
+            <button class="tab" data-filter="work">工作</button>
+            <button class="tab" data-filter="study">学习</button>
         </div>
         
         <!-- TODO列表 -->
@@ -475,13 +459,13 @@ stat-label">完成            </div>
         
         <!-- 导出操作 -->
         <div class="actions">
-            <button class="btn btn-secondary" onclick="exportData()">📤 导出数据</button>
-            <button class="btn btn-secondary" onclick="document.getElementById('importFile').click()">📥 导入数据</button>
+            <button class="btn btn-secondary" onclick="exportData()">导出</button>
+            <button class="btn btn-secondary" onclick="document.getElementById('importFile').click()">导入</button>
             <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
         </div>
         
         <div class="shortcuts">
-            快捷键：<kbd class="kbd">Enter</kbd> 添加 &nbsp; <kbd class="kbd">Esc</kbd> 清空
+            <kbd class="kbd">Enter</kbd> 添加 &nbsp; <kbd class="kbd">Esc</kbd> 清空
         </div>
     </div>
 
@@ -498,31 +482,20 @@ stat-label">完成            </div>
             weekday: 'long'
         });
         
-        // 获取今天的日期key
         function getTodayKey() {
             return new Date().toISOString().split('T')[0];
         }
         
-        function getWeekKey() {
-            const now = new Date();
-            const monday = new Date(now);
-            monday.setDate(now.getDate() - now.getDay() + 1);
-            return monday.toISOString().split('T')[0];
-        }
-        
-        // 获取所有todos
         function getTodos() {
             const data = localStorage.getItem(STORAGE_KEY);
             return data ? JSON.parse(data) : { today: [], week: [], long: [] };
         }
         
-        // 保存todos
         function saveTodos(todos) {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
             updateStreak();
         }
         
-        // 添加todo
         function addTodo() {
             const input = document.getElementById('todoInput');
             const text = input.value.trim();
@@ -542,20 +515,15 @@ stat-label">完成            </div>
                 createdAt: new Date().toISOString()
             };
             
-            if (timeType === 'today') {
-                todos.today.push(newTodo);
-            } else if (timeType === 'week') {
-                todos.week.push(newTodo);
-            } else {
-                todos.long.push(newTodo);
-            }
+            if (timeType === 'today') todos.today.push(newTodo);
+            else if (timeType === 'week') todos.week.push(newTodo);
+            else todos.long.push(newTodo);
             
             saveTodos(todos);
             input.value = '';
             render();
         }
         
-        // 删除todo
         function deleteTodo(timeType, id) {
             const todos = getTodos();
             const list = todos[timeType];
@@ -567,7 +535,6 @@ stat-label">完成            </div>
             }
         }
         
-        // 切换完成状态
         function toggleTodo(timeType, id) {
             const todos = getTodos();
             const todo = todos[timeType].find(t => t.id === id);
@@ -578,16 +545,11 @@ stat-label">完成            </div>
             }
         }
         
-        // 回车添加, ESC清空
         function handleKeyPress(event) {
-            if (event.key === 'Enter') {
-                addTodo();
-            } else if (event.key === 'Escape') {
-                document.getElementById('todoInput').value = '';
-            }
+            if (event.key === 'Enter') addTodo();
+            else if (event.key === 'Escape') document.getElementById('todoInput').value = '';
         }
         
-        // 筛选
         function setFilter(filter) {
             currentFilter = filter;
             document.querySelectorAll('.tab').forEach(tab => {
@@ -600,21 +562,14 @@ stat-label">完成            </div>
             tab.addEventListener('click', () => setFilter(tab.dataset.filter));
         });
         
-        // 优先级颜色变化
-        document.getElementById('prioritySelect').addEventListener('change', function() {
-            this.className = 'priority-' + this.value;
-        });
-        
-        // 渲染列表
         function render() {
             const todoList = document.getElementById('todoList');
             const todos = getTodos();
             
-            let allTodos = [];
             const timeGroups = [
-                { key: 'today', name: '📅 今日任务' },
-                { key: 'week', name: '📆 本周任务' },
-                { key: 'long', name: '⭐ 长期目标' }
+                { key: 'today', name: '今日' },
+                { key: 'week', name: '本周' },
+                { key: 'long', name: '长期' }
             ];
             
             let html = '';
@@ -633,17 +588,14 @@ stat-label">完成            </div>
                         total++;
                         if (todo.completed) completed++;
                         
-                        const priorityLabel = { high: '高', medium: '中', low: '低' };
-                        const categoryLabel = { life: '生活', work: '工作', study: '学习' };
-                        
                         html += `
-                            <li class="todo-item priority-${todo.priority} category-${todo.category} ${todo.completed ? 'completed' : ''}">
+                            <li class="todo-item ${todo.completed ? 'completed' : ''}">
                                 <input type="checkbox" class="todo-checkbox" ${todo.completed ? 'checked' : ''} onchange="toggleTodo('${group.key}', ${todo.id})">
                                 <div class="todo-content">
                                     <div class="todo-text">${escapeHtml(todo.text)}</div>
                                     <div class="todo-meta">
-                                        <span class="tag ${todo.category}">${categoryLabel[todo.category]}</span>
-                                        <span class="priority-badge ${todo.priority}">${priorityLabel[todo.priority]}</span>
+                                        <span class="tag ${todo.category}">${todo.category === 'life' ? '生活' : todo.category === 'work' ? '工作' : '学习'}</span>
+                                        <span class="priority-badge ${todo.priority}">${todo.priority === 'high' ? '高' : todo.priority === 'medium' ? '中' : '低'}</span>
                                     </div>
                                 </div>
                                 <button class="delete-btn" onclick="deleteTodo('${group.key}', ${todo.id})">删除</button>
@@ -661,21 +613,18 @@ stat-label">完成            </div>
             
             todoList.innerHTML = html;
             
-            // 更新统计
             document.getElementById('totalCount').textContent = total;
             document.getElementById('completedCount').textContent = completed;
             document.getElementById('completionRate').textContent = total ? Math.round(completed / total * 100) + '%' : '0%';
             document.getElementById('streakDays').textContent = getStreak();
         }
         
-        // XSS防护
         function escapeHtml(text) {
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
         }
         
-        // 连续打卡
         function updateStreak() {
             const today = getTodayKey();
             const streakData = JSON.parse(localStorage.getItem(STREAK_KEY) || '[]');
@@ -714,7 +663,6 @@ stat-label">完成            </div>
             return streak;
         }
         
-        // 导出数据
         function exportData() {
             const data = {
                 todos: getTodos(),
@@ -730,7 +678,6 @@ stat-label">完成            </div>
             URL.revokeObjectURL(url);
         }
         
-        // 导入数据
         function importData(event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -739,23 +686,18 @@ stat-label">完成            </div>
             reader.onload = function(e) {
                 try {
                     const data = JSON.parse(e.target.result);
-                    if (data.todos) {
-                        localStorage.setItem(STORAGE_KEY, JSON.stringify(data.todos));
-                    }
-                    if (data.streak) {
-                        localStorage.setItem(STREAK_KEY, data.streak);
-                    }
+                    if (data.todos) localStorage.setItem(STORAGE_KEY, JSON.stringify(data.todos));
+                    if (data.streak) localStorage.setItem(STREAK_KEY, data.streak);
                     render();
                     alert('✅ 导入成功！');
                 } catch (err) {
-                    alert('❌ 导入失败：文件格式错误');
+                    alert('❌ 导入失败');
                 }
             };
             reader.readAsText(file);
             event.target.value = '';
         }
         
-        // 初始化
         render();
     </script>
 </body>
